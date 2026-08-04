@@ -1,48 +1,50 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SignupRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
+// https://www.souysoeng.com/2025/12/laravel-12-vue-3-authentication.html
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function signup(SignupRequest $request)
     {
-        //
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+
+        return new UserResource($user);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function login(LoginRequest $request)
     {
-        //
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        return new UserResource(Auth::user());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function user()
     {
-        //
+        return new UserResource(Auth::user());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function logout()
     {
-        //
-    }
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['message' => 'Logged out']);
     }
 }
