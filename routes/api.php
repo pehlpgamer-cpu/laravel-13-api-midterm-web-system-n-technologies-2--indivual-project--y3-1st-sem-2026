@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
 
+    Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/signup', [AuthController::class, 'signup']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/user', [AuthController::class, 'user']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });
 
 
     Route::get('/products', [ProductController::class, 'index']);
@@ -32,12 +37,6 @@ Route::prefix('v1')->group(function () {
     Route::put('/inventory', [InventoryController::class, 'update']);
     Route::delete('/inventory', [InventoryController::class, 'destroy']);
 
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    })->middleware('auth:sanctum');
-    Route::post('/user', [UserController::class, 'store']);
-    Route::put('/user', [UserController::class, 'update']);
-    Route::delete('/user', [UserController::class, 'destroy']);
 
 });
 
