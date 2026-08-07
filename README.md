@@ -1,7 +1,7 @@
 # E-commerce API
-**Course, year & section:** BSIT 3-F3
-**Subject:** ITE 311 - Web Systems and Technologies 2
-**Professor:** De Guzman
+- **Course, year & section:** BSIT 3-F3
+- **Subject:** ITE 311 - Web Systems and Technologies 2
+- **Professor:** De Guzman
 
 ## Project Details
 - PHP 8.5
