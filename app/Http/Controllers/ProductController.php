@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\AddProductRequest;
 use Dedoc\Scramble\Attributes\Api;
 use Illuminate\Http\Request;
 
@@ -11,28 +12,24 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(int $id)
     {
-        return response()->json([
-            "bro" => "yeet",
-            "price" => 1
-        ]);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AddProductRequest $request)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'min:18', 'max:32'],
-            'body' => ['required'],
-        ]);
+        $validated = $request->validated();
 
-        // if ($validated)
-        // {
-        //     return response()->json($validated, 201);
-        // }
+        if ($validated)
+        {
+            return response()->json([
+                "msg" => "hello"
+            ], 201);
+        }
 
         return response()->json($request);
     }

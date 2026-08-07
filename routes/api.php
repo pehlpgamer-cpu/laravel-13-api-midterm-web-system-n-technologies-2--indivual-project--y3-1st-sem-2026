@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 
 # V1
-
 Route::prefix('v1')->group(function () {
 
     Route::post('/register', [AuthController::class, 'register']);
@@ -22,7 +21,9 @@ Route::prefix('v1')->group(function () {
     });
 
 
-    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/product/{id}', [ProductController::class, 'index'])
+        ->whereNumber('$id');
+    
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products', [ProductController::class, 'update']);
     Route::delete('/products', [ProductController::class, 'destroy']);
