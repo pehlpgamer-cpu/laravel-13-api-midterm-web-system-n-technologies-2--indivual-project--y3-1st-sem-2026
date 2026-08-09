@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Product\AddProductRequest;
+
+use App\Http\Requests\Product\PostProductRequest;
+use App\Http\Resources\ProductResource;
+use App\Http\Services\Product\PostProductService;
 use Dedoc\Scramble\Attributes\Api;
 use Illuminate\Http\Request;
 
@@ -20,18 +23,11 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AddProductRequest $request)
+    public function store(PostProductRequest $request)
     {
-        $validated = $request->validated();
-
-        if ($validated)
-        {
-            return response()->json([
-                "msg" => "hello"
-            ], 201);
-        }
-
-        return response()->json($request);
+        $valid_request = $request->validated();
+        $response = new PostProductService($valid_request);
+        return new ProductResource($response);
     }
 
     /**

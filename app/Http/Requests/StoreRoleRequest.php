@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddProductRequest extends FormRequest
+class StoreRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,9 +23,7 @@ class AddProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:18', 'max:32', 'string'],
-            'description' => ['max:512', 'string'],
-            'price' => ['required', 'integer'],
+            //
         ];
     }
 }
