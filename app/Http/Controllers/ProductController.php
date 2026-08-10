@@ -22,7 +22,8 @@ class ProductController extends Controller
      */
     public function index(GetAllProductsService $getAllProductsService)
     {
-        return $getAllProductsService->call();
+        //$result = $getAllProductsService->call();
+        return ProductResource::collection(Product::all());
     }
 
     /**

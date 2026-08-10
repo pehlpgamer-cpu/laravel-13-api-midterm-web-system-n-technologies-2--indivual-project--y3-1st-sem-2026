@@ -8,6 +8,6 @@ class GetAllProductsService
 
     public function call(): mixed
     {
-        return Product::paginate(15);
+        return Product::all();
     }
 }
