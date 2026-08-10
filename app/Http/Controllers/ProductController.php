@@ -5,38 +5,45 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\PostProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Services\Product\GetAllProductsService;
 use App\Http\Services\Product\GetProductService;
 use App\Http\Services\Product\PostProductService;
+use App\Models\Product;
 use Dedoc\Scramble\Attributes\Api;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+// https://youtu.be/REwEWTG_kXQ
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(?int $id = null)
+    public function index(GetAllProductsService $getAllProductsService)
     {
-        return new GetProductService($id)->getResponse();
+        return $getAllProductsService()->call();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostProductRequest $request)
+    public function store(PostProductRequest $request, PostProductService $postProductService): JsonResponse
     {
-        $valid_request = $request->validated();
-        $response = new PostProductService($valid_request);
-        return new ProductResource($response);
+
+        $result = $postProductService->call($request);
+        return response()->json([
+            'data' => $result
+        ]);
+        //return new ProductResource($response);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, GetProductService $getProductService)
     {
-        //
+        return $getProductService($id)->getResponse();
     }
 
     /**

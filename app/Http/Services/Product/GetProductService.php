@@ -9,13 +9,9 @@ class GetProductService
 {
     private mixed $response;
 
-    public function __construct(?int $id = null)
+    public function __construct(int $id)
     {
-        if ($id)
-        {
-            $this->response = Product::where('product_id', $id)->get();
-        }
-        else $this->response = Product::paginate(15);
+        $this->response = Product::where('product_id', $id)->get();
     }
 
     function getResponse(): mixed

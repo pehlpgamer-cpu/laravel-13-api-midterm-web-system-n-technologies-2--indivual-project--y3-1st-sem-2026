@@ -23,9 +23,21 @@ class PostProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:18', 'max:32', 'string'],
-            'description' => ['max:512', 'string'],
-            'price' => ['required', 'integer'],
+            'name' => [
+                'required',
+                'min:10',
+                'max:32',
+                'string'
+            ],
+            'description' => [
+                'max:512',
+                'string',
+                'nullable'
+            ],
+            'price' => [
+                'required',
+                'integer'
+            ],
         ];
     }
 }

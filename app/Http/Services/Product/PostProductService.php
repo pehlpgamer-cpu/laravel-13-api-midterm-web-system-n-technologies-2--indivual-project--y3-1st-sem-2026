@@ -2,18 +2,18 @@
 namespace App\Http\Services\Product;
 
 use App\Http\Requests\Product\PostProductRequest;
+use App\Models\Product;
 
 class PostProductService
 {
-    private $request;
-
-    public function __construct(PostProductRequest $request)
+    public function call(PostProductRequest $request) : mixed
     {
-        $this->request = $request;
-    }
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price
+        ]);
 
-    public function getResults() : mixed
-    {
-        return $this->request;
+        return Product::where('name', $request->name)->get();
     }
 }

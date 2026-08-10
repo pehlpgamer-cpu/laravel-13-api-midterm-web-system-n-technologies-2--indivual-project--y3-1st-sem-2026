@@ -12,30 +12,28 @@ use Illuminate\Support\Facades\Route;
 # V1
 Route::prefix('v1')->group(function () {
 
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/user', [AuthController::class, 'user']);
-        Route::post('/logout', [AuthController::class, 'logout']);
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/register', 'register');
+        Route::post('/login', 'login');
+        Route::post('/logout', 'logout');
+        Route::get('/user', 'user');
     });
 
+    Route::controller(ProductController::class)->group(function() {
+        Route::get('product/{id}', 'show')->whereNumber('id');
+        Route::get('/products', 'index');
+        Route::post('/products', 'store');
+        Route::put('/products', 'update');
+        Route::delete('/products', 'destroy');
+    });
 
-    Route::get('/products/{id?}', [ProductController::class, 'index'])->whereNumber('id');
-
-    Route::post('/products', [ProductController::class, 'store']);
-    Route::put('/products', [ProductController::class, 'update']);
-    Route::delete('/products', [ProductController::class, 'destroy']);
-
-    Route::get('/categories', [CategoryController::class, 'index']);
-    Route::post('/categories', [CategoryController::class, 'store']);
-    Route::put('/categories', [CategoryController::class, 'update']);
-    Route::delete('/categories', [CategoryController::class, 'destroy']);
-
-    // Route::get('/inventory', [InventoryController::class, 'index']);
-    // Route::post('/inventory', [InventoryController::class, 'store']);
-    // Route::put('/inventory', [InventoryController::class, 'update']);
-    // Route::delete('/inventory', [InventoryController::class, 'destroy']);
+    Route::controller(CategoryController::class)->group(function() {
+        Route::get('/category/{id}', 'show');
+        Route::get('/categories', 'index');
+        Route::post('/categories', 'store');
+        Route::put('/categories', 'update');
+        Route::delete('/categories', 'destroy');
+    });
 
 
 });
