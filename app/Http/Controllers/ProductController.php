@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\PostProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Services\Product\GetProductService;
 use App\Http\Services\Product\PostProductService;
 use Dedoc\Scramble\Attributes\Api;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(int $id)
+    public function index(?int $id = null)
     {
-
+        return new GetProductService($id)->getResponse();
     }
 
     /**

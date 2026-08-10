@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->id('product_id');
             $table->string('name')->unique();
             $table->string('description')->nullable();
-            $table->integer('price');
+            $table->decimal('price');
 
             $table->timestamp('deleted_at')->nullable()->default(null);
             $table->timestamp('created_at');

@@ -1,3 +1,4 @@
+error_msg.json
 *.log
 .DS_Store
 .env

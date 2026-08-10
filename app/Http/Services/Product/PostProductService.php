@@ -12,7 +12,7 @@ class PostProductService
         $this->request = $request;
     }
 
-    public function getResults() : mixed 
+    public function getResults() : mixed
     {
         return $this->request;
     }

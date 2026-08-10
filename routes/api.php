@@ -21,9 +21,8 @@ Route::prefix('v1')->group(function () {
     });
 
 
-    Route::get('/product/{id}', [ProductController::class, 'index'])
-        ->whereNumber('$id');
-    
+    Route::get('/products/{id?}', [ProductController::class, 'index'])->whereNumber('id');
+
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products', [ProductController::class, 'update']);
     Route::delete('/products', [ProductController::class, 'destroy']);
@@ -33,10 +32,10 @@ Route::prefix('v1')->group(function () {
     Route::put('/categories', [CategoryController::class, 'update']);
     Route::delete('/categories', [CategoryController::class, 'destroy']);
 
-    Route::get('/inventory', [InventoryController::class, 'index']);
-    Route::post('/inventory', [InventoryController::class, 'store']);
-    Route::put('/inventory', [InventoryController::class, 'update']);
-    Route::delete('/inventory', [InventoryController::class, 'destroy']);
+    // Route::get('/inventory', [InventoryController::class, 'index']);
+    // Route::post('/inventory', [InventoryController::class, 'store']);
+    // Route::put('/inventory', [InventoryController::class, 'update']);
+    // Route::delete('/inventory', [InventoryController::class, 'destroy']);
 
 
 });
