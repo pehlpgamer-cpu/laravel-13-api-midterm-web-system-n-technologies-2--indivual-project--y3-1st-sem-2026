@@ -16,6 +16,7 @@
         "laravel/tinker": "^3.0"
     },
     "require-dev": {
+        "albertoarena/laravel-truss": "^1.7",
         "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.23",
         "laramint/laravel-brain": "^2.3",

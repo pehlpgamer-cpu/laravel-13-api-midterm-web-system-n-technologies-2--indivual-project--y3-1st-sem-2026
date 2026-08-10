@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function index(GetAllProductsService $getAllProductsService)
     {
-        return $getAllProductsService()->call();
+        return $getAllProductsService->call();
     }
 
     /**

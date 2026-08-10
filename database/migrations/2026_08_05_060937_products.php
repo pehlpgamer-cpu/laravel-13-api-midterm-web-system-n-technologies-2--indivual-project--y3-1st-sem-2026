@@ -20,7 +20,6 @@ return new class extends Migration
             $table->timestamp('deleted_at')->nullable()->default(null);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-
         });
     }
 
