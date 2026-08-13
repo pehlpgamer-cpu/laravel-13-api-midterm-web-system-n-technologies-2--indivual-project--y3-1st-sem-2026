@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
 
-
+        // FIX: only inserts the first record
         Product::insert(
             [
                 'name' => 'Acer Nitro 5 15.6 inch laptop',
@@ -62,6 +62,6 @@ class ProductSeeder extends Seeder
             ],
         );
 
-        //Product::factory()->count(100)->create();
+        Product::factory()->count(100)->create();
     }
 }

@@ -17,9 +17,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->decimal('price');
 
-            $table->timestamp('deleted_at')->nullable()->default(null);
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->softDeletesDatetime();
+            $table->timestamps();
         });
     }
 
