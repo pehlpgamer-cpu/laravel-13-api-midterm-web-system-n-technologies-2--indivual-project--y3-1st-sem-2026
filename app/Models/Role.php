@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[Table('roles', key: 'role_id')]
-// #[Fillable([])]
-// #[Hidden([])]
+
 
 class Role extends Model
 {

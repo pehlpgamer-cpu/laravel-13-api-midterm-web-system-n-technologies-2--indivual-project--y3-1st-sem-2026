@@ -11,9 +11,13 @@ class ProductResource extends JsonApiResource
      * The resource's attributes.
      */
     public $attributes = [
+        'product_id',
         'name',
         'description',
         'price',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     /**

@@ -20,14 +20,15 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('product_id')
-                ->constrained('categories')
-                ->cascadeOnDelete();
+                ->constrained(table: 'products', indexName: 'product_categories_product_id')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             $table->foreignId('category_id')
-                ->constrained('category_id')
-                ->cascadeOnDelete();
+                ->constrained(table: 'categories', indexName: 'product_categories_user_id')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->index('')
         });
 
     }

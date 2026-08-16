@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\AuditTrailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,57 +21,19 @@ Route::middleware(['throttle:api'])->group(function() {
             Route::post('/logout', 'logout');
         });
 
-        Route::controller(ProductController::class)->group(function()
-        {
-            Route::prefix('/products')->group(function()
-            {
-                Route::prefix('/{id}')->group(function()
-                {
-                    Route::get('', 'show');
-                    Route::delete('', 'destroy');
-                })
-                ->whereNumber('id');
+        Route::apiResource('/products', ProductController::class);
+        Route::apiResource('/product_categories', ProductCategoryController::class);
+        Route::apiResource('/categories', CategoryController::class);
 
-                Route::get('', 'index');
+        Route::apiResource('/inventories', InventoryController::class);
+        Route::apiResource('/inventory-items', InventoryController::class);
 
-                Route::post('', 'store');
-                Route::put('', 'update');
-            });
-        });
+        Route::apiResource('/users', UserController::class);
+        //Route::apiResource('/roles', RoleController::class);
 
-        Route::controller(CategoryController::class)->group(function()
-        {
-            Route::prefix('/categories')->group(function()
-            {
-                Route::prefix('/{id}')->group(function()
-                {
-                    Route::get('', 'show');
-                    Route::delete('', 'destroy');
-                })->whereNumber('id');
+        //
 
-                Route::get('', 'index');
-                Route::post('', 'store');
-                Route::put('', 'update');
-            });
-        });
-
-        Route::controller(InventoryController::class)->group(function()
-        {
-            Route::prefix('/inventories')->group(function()
-            {
-                Route::prefix('/{id}')->group(function()
-                {
-                    Route::get('', 'show');
-                    Route::delete('', 'destroy');
-                })->whereNumber('id');
-
-                Route::get('', 'index');
-                Route::post('', 'store');
-                Route::put('', 'update');
-            });
-        });
-
-
+        Route::apiResource('/audit-trails', AuditTrailController::class);
     });
 });
 
