@@ -6,7 +6,7 @@ use App\Http\Actions\Product\DeleteProductAction;
 use App\Http\Actions\Product\ListProductsAction;
 use App\Http\Actions\Product\PostProductAction;
 use App\Http\Actions\Product\UpdateProductsAction;
-use App\Http\Product\Requests\ListProductsRequest;
+use App\Http\Requests\Product\ListProductsRequest;
 // REQUEST
 use App\Http\Requests\Product\PostProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -69,7 +69,7 @@ class ProductController extends Controller
         example: 'ascending',
         required: false
     )]
-    public function index(ListProductsAction $listProductsAction, Request $request)
+    public function index(ListProductsAction $listProductsAction, ListProductsRequest $request)
     {
         //return $listProductsAction->call($request);
         return ProductResource::collection($listProductsAction->call($request));

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Product\Requests;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -26,7 +26,9 @@ class ListProductsRequest extends FormRequest
             'page' => ['integer'],
             'name' => ['string'],
             'min_price' => ['numeric'],
-            'max_price' => ['numeric']
+            'max_price' => ['numeric'],
+            'sort' => ['string'],
+            'sort_order' => ['string']
         ];
     }
 }

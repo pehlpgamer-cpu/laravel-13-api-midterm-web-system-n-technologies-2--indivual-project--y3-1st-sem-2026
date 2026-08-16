@@ -2,12 +2,13 @@
 
 namespace App\Http\Actions\Product;
 
+use App\Http\Requests\Product\ListProductsRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
+
 
 class ListProductsAction
 {
-    public function call(Request $request)
+    public function call(ListProductsRequest $request)
     {
         $searchQuery = Product::query();
 
