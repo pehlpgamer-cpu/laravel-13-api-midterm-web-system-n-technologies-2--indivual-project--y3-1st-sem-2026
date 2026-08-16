@@ -7,9 +7,10 @@
 - PHP 8.5
 - Laravel 13
 - **Packages**
-    - `laravel/phpunit`
+    - `laravel/pest`
     - `laravel/sanctum`
     - `laravel/telescope --dev`
+    - `albertoarena/laravel-truss --dev`
     - `dedoc/scramble`
     - `laramint/laravel-brain`
 - Databases:
