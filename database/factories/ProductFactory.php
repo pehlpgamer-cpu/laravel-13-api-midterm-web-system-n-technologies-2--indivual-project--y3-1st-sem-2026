@@ -20,7 +20,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->unique()->realTextBetween(10, 20),
             'description' => fake()->text(200),
-            'price' => fake()->numberBetween(10, 50000)
+            'price' => fake()->numberBetween(10, 50000),
         ];
     }
 }

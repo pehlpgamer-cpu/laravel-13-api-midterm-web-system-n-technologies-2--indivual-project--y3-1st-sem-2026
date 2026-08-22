@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -517,17 +516,16 @@ class ProductSeeder extends Seeder
             ],
         ];
 
-        foreach($products as $i)
-        {
+        foreach ($products as $i) {
             Product::create([
                 'name' => $i['name'],
                 'description' => $i['description'],
-                'price' => $i['price']
+                'price' => $i['price'],
             ]);
         }
 
         // Product::insert($products); // <-- this causes a sql error
 
-        //Product::factory()->count(100)->create();
+        // Product::factory()->count(100)->create();
     }
 }

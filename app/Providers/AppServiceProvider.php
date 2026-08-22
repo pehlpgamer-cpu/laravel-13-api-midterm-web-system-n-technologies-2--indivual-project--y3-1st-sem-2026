@@ -8,10 +8,8 @@ use Illuminate\Foundation\DevCommands;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,26 +37,28 @@ class AppServiceProvider extends ServiceProvider
         $this->rateLimiters();
         $this->configureModels();
         $this->configureUrl();
-        //$this->configureCommands();
-        }
+        $this->configureCommands();
+    }
 
-        // private function configureCommands(): void
-        // {
-            //     DB::prohibitDestructiveCommands(
-    //         $this->app->isProduction(), // <-- idk why it doesn't work, maybe outdated?
-    //     );
-    // }
+    private function configureCommands(): void
+    {
+        DB::prohibitDestructiveCommands(
+            $this->app->environment('production')
+        );
+    }
 
     private function configureModels(): void
     {
         Model::shouldBeStrict();
         Model::unguard(); // "for faster development"
-        // Model::preventLazyLoading(! $this->app->isProduction());
+        Model::preventLazyLoading(! $this->app->environment('production'));
     }
 
     private function configureUrl(): void
     {
-        //URL::forceScheme('https');
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 
     private function rateLimiters(): void

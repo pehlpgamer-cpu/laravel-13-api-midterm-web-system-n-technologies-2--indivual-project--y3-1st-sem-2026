@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
 use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
+use App\Models\Inventory;
 
 class InventoryController extends Controller
 {

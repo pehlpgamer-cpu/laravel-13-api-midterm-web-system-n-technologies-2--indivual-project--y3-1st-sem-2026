@@ -14,7 +14,7 @@ return new class extends Migration
         // "Cart Items"
         Schema::create('carts', function (Blueprint $table) {
             $table->id('cart_id');
-            
+
             $table->softDeletesDatetime();
             $table->timestamps();
 

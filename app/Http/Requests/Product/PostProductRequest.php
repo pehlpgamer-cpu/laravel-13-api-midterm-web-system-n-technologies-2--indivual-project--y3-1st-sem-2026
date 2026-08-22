@@ -27,16 +27,16 @@ class PostProductRequest extends FormRequest
                 'required',
                 'min:10',
                 'max:32',
-                'string'
+                'string',
             ],
             'description' => [
                 'max:512',
                 'string',
-                'nullable'
+                'nullable',
             ],
             'price' => [
                 'required',
-                'integer'
+                'integer',
             ],
         ];
     }

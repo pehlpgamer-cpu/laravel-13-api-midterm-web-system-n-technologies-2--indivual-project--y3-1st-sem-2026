@@ -28,7 +28,7 @@ class ListProductsRequest extends FormRequest
             'min_price' => ['numeric'],
             'max_price' => ['numeric'],
             'sort' => ['string'],
-            'sort_order' => ['string']
+            'sort_order' => ['string'],
         ];
     }
 }

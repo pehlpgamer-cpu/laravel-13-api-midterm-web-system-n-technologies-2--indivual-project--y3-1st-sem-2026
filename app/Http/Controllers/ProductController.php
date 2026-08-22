@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
+
 // ACTIONS
-use App\Http\Actions\Product\DeleteProductAction;
-use App\Http\Actions\Product\ListProductsAction;
-use App\Http\Actions\Product\PostProductAction;
-use App\Http\Actions\Product\UpdateProductsAction;
-use App\Http\Requests\Product\ListProductsRequest;
+use App\Actions\Product\DeleteProductAction;
+use App\Actions\Product\PostProductAction;
+use App\Actions\Product\UpdateProductAction;
+
 // REQUEST
+use App\Http\Requests\Product\ListProductsRequest;
 use App\Http\Requests\Product\PostProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Requests\Product\UpdateProductRequest;
+
+// DTO
+use App\DTOs\Product\CreateProductDto;
+use App\DTOs\Product\SearchProductsDto;
+use App\DTOs\Product\UpdateProductDto;
+
 // ETC
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Queries\ListProductsQuery;
 use Dedoc\Scramble\Attributes\QueryParameter;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -34,7 +41,7 @@ class ProductController extends Controller
         description: 'product name.',
         type: 'string',
         default: null,
-        example: "RTX 3060 TI GPU - 4GB VRAM",
+        example: 'RTX 3060 TI GPU - 4GB VRAM',
         required: false
     )]
     #[QueryParameter(
@@ -69,41 +76,44 @@ class ProductController extends Controller
         example: 'ascending',
         required: false
     )]
-    public function index(ListProductsAction $listProductsAction, ListProductsRequest $request)
+    public function index(ListProductsRequest $request, ListProductsQuery $query)
     {
-        //return $listProductsAction->call($request);
-        return ProductResource::collection($listProductsAction->call($request));
+        $data = SearchProductsDto::fromArray($request->validated());
+        return ProductResource::collection($query->handle($data));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostProductRequest $request, PostProductAction $postProductAction)
+    public function store(PostProductRequest $request, PostProductAction $action)
     {
-        return $postProductAction->call($request);
+        $data = CreateProductDto::fromArray($request->validated());
+        return ProductResource::collection($action->handle($data));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product): Product
+    public function show(Product $product)
     {
-        return $product;
+        return ProductResource::make($product);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product, UpdateProductsAction $updateProductsAction)
+    public function update(UpdateProductRequest $request, Product $product, UpdateProductAction $action)
     {
-        //
+        $data = UpdateProductDto::fromArray($request->validated());
+        return ProductResource::make($action->handle($data, $product));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product, DeleteProductAction $deleteProductAction)
+
+    public function destroy(Product $product, DeleteProductAction $action)
     {
-        //
+        return ProductResource::collection($action->handle($product));
     }
 }

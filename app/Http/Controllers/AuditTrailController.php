@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AuditTrail;
 use App\Http\Requests\StoreAuditTrailRequest;
-use App\Http\Requests\UpdateAuditTrailRequest;
+use App\Models\AuditTrail;
 
 class AuditTrailController extends Controller
 {
@@ -28,22 +27,6 @@ class AuditTrailController extends Controller
      * Display the specified resource.
      */
     public function show(AuditTrail $auditTrail)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAuditTrailRequest $request, AuditTrail $auditTrail)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AuditTrail $auditTrail)
     {
         //
     }
