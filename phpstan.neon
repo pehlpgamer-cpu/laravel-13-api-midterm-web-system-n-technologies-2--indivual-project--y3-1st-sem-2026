@@ -1,0 +1,17 @@
+parameters:
+    paths:
+        - app/
+        - routes/
+        - tests/
+        - database/
+    level: max
+    ignoreErrors:
+        # Larastan is doesn't work on laravel 13, that's why these ignore errors exist.
+
+        - '#Call to an undefined static method [a-zA-Z0-9\\_]+::where\(\)#'
+        - '#Call to an undefined static method [a-zA-Z0-9\\_]+::create\(\)#'
+
+        - '#Cannot call method get\(\) on mixed.#'
+        - '#Cannot call method delete\(\) on mixed.#'
+        - '#Cannot call method update\(\) on mixed.#'
+

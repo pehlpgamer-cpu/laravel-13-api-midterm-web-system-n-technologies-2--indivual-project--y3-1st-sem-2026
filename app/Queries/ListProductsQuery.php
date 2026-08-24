@@ -6,10 +6,10 @@ namespace App\Queries;
 use App\Models\Product;
 use App\DTOs\Product\SearchProductsDto;
 
-class ListProductsQuery
+readonly final class ListProductsQuery
 {
     // ! FIX only "name" param works fine
-    public function handle(SearchProductsDto $data)
+    public function __invoke(SearchProductsDto $data)
     {
         $searchQuery = Product::query();
 

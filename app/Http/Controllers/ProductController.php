@@ -22,8 +22,9 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Queries\ListProductsQuery;
 use Dedoc\Scramble\Attributes\QueryParameter;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductController extends Controller
+final class ProductController
 {
     /**
      * Display a listing of the resource.
@@ -76,25 +77,25 @@ class ProductController extends Controller
         example: 'ascending',
         required: false
     )]
-    public function index(ListProductsRequest $request, ListProductsQuery $query)
+    public function index(ListProductsRequest $request, ListProductsQuery $query): JsonResource
     {
         $data = SearchProductsDto::fromArray($request->validated());
-        return ProductResource::collection($query->handle($data));
+        return ProductResource::collection($query($data));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostProductRequest $request, PostProductAction $action)
+    public function store(PostProductRequest $request, PostProductAction $action): JsonResource
     {
         $data = CreateProductDto::fromArray($request->validated());
-        return ProductResource::collection($action->handle($data));
+        return ProductResource::collection($action($data));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product): JsonResource
     {
         return ProductResource::make($product);
     }
@@ -102,18 +103,18 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product, UpdateProductAction $action)
+    public function update(UpdateProductRequest $request, Product $product, UpdateProductAction $action): JsonResource
     {
         $data = UpdateProductDto::fromArray($request->validated());
-        return ProductResource::make($action->handle($data, $product));
+        return ProductResource::make($action($data, $product));
     }
 
     /**
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Product $product, DeleteProductAction $action)
+    public function destroy(Product $product, DeleteProductAction $action): JsonResource
     {
-        return ProductResource::collection($action->handle($product));
+        return ProductResource::collection($action($product));
     }
 }

@@ -8,11 +8,12 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 // https://www.souysoeng.com/2025/12/laravel-12-vue-3-authentication.html
-class AuthController extends Controller
+final class AuthController
 {
-    public function signup(SignupRequest $request)
+    public function signup(SignupRequest $request): JsonResource
     {
         $user = User::create([
             'name' => $request->name,
@@ -34,7 +35,7 @@ class AuthController extends Controller
         return new UserResource(Auth::user());
     }
 
-    public function user()
+    public function user(): JsonResource
     {
         return new UserResource(Auth::user());
     }

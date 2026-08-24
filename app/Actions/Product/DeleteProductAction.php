@@ -3,16 +3,20 @@
 namespace App\Actions\Product;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
-class DeleteProductAction
+readonly final class DeleteProductAction
 {
-    public function handle(Product $product)
+    /**
+     * @return Collection<int, Product>
+     */
+    public function __invoke(Product $product): Collection
     {
-        DB::transaction(function () use ($product) {
-            return Product::where('product_id', $product)->delete();
+        DB::transaction(function () use ($product): void {
+            $product->delete();
         });
 
-        return Product::query()->where('product_id', $product)->get();
+        return Product::query()->get();
     }
 }

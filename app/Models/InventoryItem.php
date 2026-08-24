@@ -6,7 +6,7 @@ use Database\Factories\InventoryItemsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InventoryItems extends Model
+class InventoryItem extends Model
 {
     /** @use HasFactory<InventoryItemsFactory> */
     use HasFactory;

@@ -6,9 +6,10 @@ use App\DTOs\Product\UpdateProductDto;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
-class UpdateProductAction
+readonly final class UpdateProductAction
 {
-    public function handle(UpdateProductDto $data, Product $product)
+
+    public function __invoke(UpdateProductDto $data, Product $product): Product
     {
         DB::transaction(function () use ($data, $product) {
             return Product::where('product_id', $product)->update([

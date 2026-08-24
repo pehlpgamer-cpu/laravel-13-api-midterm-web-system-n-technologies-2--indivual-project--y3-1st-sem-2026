@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreInventoryRequest;
-use App\Http\Requests\UpdateInventoryRequest;
+use App\Http\Requests\StoreInventoryItemsRequest;
+use App\Http\Requests\UpdateInventoryItemsRequest;
 use App\Models\Inventory;
+use App\Models\InventoryItem;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class InventoryController
+final class InventoryItemController
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +21,7 @@ final class InventoryController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreInventoryRequest $request): JsonResource
+    public function store(StoreInventoryItemsRequest $request): JsonResource
     {
         return new JsonResource(Inventory::class);
     }
@@ -28,7 +29,7 @@ final class InventoryController
     /**
      * Display the specified resource.
      */
-    public function show(Inventory $inventory): JsonResource
+    public function show(InventoryItem $inventoryItems): JsonResource
     {
         return new JsonResource(Inventory::class);
     }
@@ -36,7 +37,7 @@ final class InventoryController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInventoryRequest $request, Inventory $inventory): JsonResource
+    public function update(UpdateInventoryItemsRequest $request, InventoryItem $inventoryItems): JsonResource
     {
         return new JsonResource(Inventory::class);
     }
@@ -44,7 +45,7 @@ final class InventoryController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inventory $inventory): JsonResource
+    public function destroy(InventoryItem $inventoryItems): JsonResource
     {
         return new JsonResource(Inventory::class);
     }
