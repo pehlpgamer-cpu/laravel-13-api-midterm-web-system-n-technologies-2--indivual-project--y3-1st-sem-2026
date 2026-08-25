@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Table('Categories', key: 'category_id')]
+#[Table(name: 'Categories', key: 'category_id')]
 // #[Fillable([])]
 // #[Hidden([])]
 

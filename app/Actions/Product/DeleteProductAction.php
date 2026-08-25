@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Product;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\DatabaseManager;
 
-readonly final class DeleteProductAction
+final readonly class DeleteProductAction
 {
-    /**
-     * @return Collection<int, Product>
-     */
-    public function __invoke(Product $product): Collection
-    {
-        DB::transaction(function () use ($product): void {
-            $product->delete();
-        });
+    public function __construct(
+        private DatabaseManager $databaseManager,
+    ) {}
 
-        return Product::query()->get();
+    public function __invoke(Product $product): void
+    {
+        $this->databaseManager->transaction(
+            fn (): bool|null => $product->delete(),
+        );
     }
 }

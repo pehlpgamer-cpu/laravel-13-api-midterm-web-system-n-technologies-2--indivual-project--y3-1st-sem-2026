@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
@@ -67,12 +69,8 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(30); // temporary
         });
 
-        RateLimiter::for('customer', function () {
-            return Limit::perMinute(60);
-        });
+        RateLimiter::for('customer', fn() => Limit::perMinute(60));
 
-        RateLimiter::for('admin', function () {
-            return Limit::perMinute(2000);
-        });
+        RateLimiter::for('admin', fn() => Limit::perMinute(2000));
     }
 }

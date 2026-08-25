@@ -1,4 +1,4 @@
-<?php
+<?php  declare(strict_types=1);
 
 namespace App\Queries;
 
@@ -9,43 +9,39 @@ use App\DTOs\Product\SearchProductsDto;
 readonly final class ListProductsQuery
 {
     // ! FIX only "name" param works fine
-    public function __invoke(SearchProductsDto $data)
+    public function __invoke(SearchProductsDto $searchProductsDto)
     {
-        $searchQuery = Product::query();
+        $builder = Product::query();
 
-        if ($data->name !== null) {
-            $searchQuery->orWhere('name', 'like', '%' . $data->name . '%');
+        if ($searchProductsDto->name !== null) {
+            $builder->orWhere('name', 'like', '%' . $searchProductsDto->name . '%');
         }
 
-        if ($data->minPrice !== null) {
-            $searchQuery->orWhere('price', '>=', $data->minPrice);
+        if ($searchProductsDto->minPrice !== null) {
+            $builder->orWhere('price', '>=', $searchProductsDto->minPrice);
         }
 
-        if ($data->maxPrice !== null) {
-            $searchQuery->orWhere('price', '<=', $data->maxPrice);
+        if ($searchProductsDto->maxPrice !== null) {
+            $builder->orWhere('price', '<=', $searchProductsDto->maxPrice);
         }
 
-        $sortOrder = ($data->sortOrder && $data->sortOrder === 'asc') ?
+        $sortOrder = ($searchProductsDto->sortOrder && $searchProductsDto->sortOrder === 'asc') ?
             'asc' : 'desc';
 
-        if ($data->sort !== null) {
-            switch ($data->sort) {
+        if ($searchProductsDto->sort !== null) {
+            switch ($searchProductsDto->sort) {
                 case 'price':
-                    $searchQuery->orderBy($data->sort, $sortOrder);
-                    break;
 
                 case 'name':
-                    $searchQuery->orderBy($data->sort, $sortOrder);
-                    break;
 
                 case 'rating':
-                    $searchQuery->orderBy($data->sort, $sortOrder);
+                    $builder->orderBy($searchProductsDto->sort, $sortOrder);
                     break;
 
                 default:
             }
         }
 
-        return $searchQuery->paginate(15);
+        return $builder->paginate(15);
     }
 }

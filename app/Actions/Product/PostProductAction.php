@@ -1,29 +1,26 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Actions\Product;
 
 use App\DTOs\Product\CreateProductDto;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\DatabaseManager;
 
 readonly final class PostProductAction
 {
-    /**
-     * @return Collection<int, Product>
-    */
-    // TODO - I Think it should return associative array, because currently it's violating the single responsibility & separation of concerns principle...
-    public function __invoke(CreateProductDto $data): Collection
+    public function __construct(
+        private DatabaseManager $databaseManager,
+    ) {
+    }
+
+    public function __invoke(CreateProductDto $createProductDto): void
     {
-
-        DB::transaction(function () use ($data) {
-            return Product::create([
-                'name' => $data->name,
-                'description' => $data->description,
-                'price' => $data->price,
-            ]);
-        });
-
-        return Product::where('name', $data->name)->get();
+        $this->databaseManager->transaction(
+            fn () => Product::query()->create([
+                'name' => $createProductDto->name,
+                'description' => $createProductDto->description,
+                'price' => $createProductDto->price,
+            ])
+        );
     }
 }

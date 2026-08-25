@@ -1,11 +1,10 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class CategoryController
+readonly final class CategoryController
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,7 @@ final class CategoryController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResource
+    public function store(): JsonResource
     {
         return new JsonResource(CategoryController::class);
     }
@@ -26,7 +25,7 @@ final class CategoryController
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResource
+    public function show(): JsonResource
     {
         return new JsonResource(CategoryController::class);
     }
@@ -34,7 +33,7 @@ final class CategoryController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): JsonResource
+    public function update(): JsonResource
     {
         return new JsonResource(CategoryController::class);
     }
@@ -42,7 +41,7 @@ final class CategoryController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResource
+    public function destroy(): JsonResource
     {
         return new JsonResource(CategoryController::class);
     }

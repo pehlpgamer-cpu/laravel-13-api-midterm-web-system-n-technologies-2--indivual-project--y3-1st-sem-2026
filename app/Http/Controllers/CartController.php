@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCartRequest;
@@ -7,7 +6,7 @@ use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class CartController
+readonly final class CartController
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ final class CartController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCartRequest $request): JsonResource
+    public function store(): JsonResource
     {
         return new JsonResource(Cart::class);
     }
@@ -28,7 +27,7 @@ final class CartController
     /**
      * Display the specified resource.
      */
-    public function show(Cart $cart): JsonResource
+    public function show(): JsonResource
     {
         return new JsonResource(Cart::class);
     }
@@ -36,7 +35,7 @@ final class CartController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartRequest $request, Cart $cart): JsonResource
+    public function update(): JsonResource
     {
         return new JsonResource(Cart::class);
     }
@@ -44,7 +43,7 @@ final class CartController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cart $cart): JsonResource
+    public function destroy(): JsonResource
     {
         return new JsonResource(Cart::class);
     }

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRoleRequest;
@@ -7,7 +6,7 @@ use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class RoleController
+readonly final class RoleController
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ final class RoleController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRoleRequest $request): JsonResource
+    public function store(): JsonResource
     {
         return new JsonResource(Role::class);
     }
@@ -28,7 +27,7 @@ final class RoleController
     /**
      * Display the specified resource.
      */
-    public function show(Role $review): JsonResource
+    public function show(): JsonResource
     {
         return new JsonResource(Role::class);
     }
@@ -36,7 +35,7 @@ final class RoleController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleRequest $request, Role $review): JsonResource
+    public function update(): JsonResource
     {
         return new JsonResource(Role::class);
     }
@@ -44,7 +43,7 @@ final class RoleController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $review): JsonResource
+    public function destroy(): JsonResource
     {
         return new JsonResource(Role::class);
     }

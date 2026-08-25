@@ -1,11 +1,10 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAuditTrailRequest;
 use App\Models\AuditTrail;
 use Illuminate\Http\Resources\Json\JsonResource;
-final class AuditTrailController
+readonly final class AuditTrailController
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,9 @@ final class AuditTrailController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAuditTrailRequest $request): JsonResource
+    public function store(StoreAuditTrailRequest $storeAuditTrailRequest): JsonResource
     {
+        echo $storeAuditTrailRequest;
         return new JsonResource(AuditTrail::class);
     }
 
@@ -28,6 +28,6 @@ final class AuditTrailController
      */
     public function show(AuditTrail $auditTrail): JsonResource
     {
-        return new JsonResource(AuditTrail::class);
+        return new JsonResource($auditTrail);
     }
 }

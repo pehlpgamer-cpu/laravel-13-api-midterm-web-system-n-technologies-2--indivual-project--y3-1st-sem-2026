@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -12,11 +12,17 @@ class ProductCategory extends Model
     /** @use HasFactory<ProductCategoryFactory> */
     use HasFactory;
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Product, $this>
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Category, $this>
+     */
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);

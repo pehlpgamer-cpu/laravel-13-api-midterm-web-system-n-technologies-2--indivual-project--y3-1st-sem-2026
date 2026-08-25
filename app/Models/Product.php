@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Table('Products', key: 'product_id')]
+#[Table(name: 'Products', key: 'product_id')]
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'description',
+    'price',
+])]
 
 class Product extends Model
 {
-    /** @use HasFactory<ProductFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'price',
-    ];
+    use SoftDeletes;
 }

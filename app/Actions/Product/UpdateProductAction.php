@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Product;
 
 use App\DTOs\Product\UpdateProductDto;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\DatabaseManager;
 
-readonly final class UpdateProductAction
+final readonly class UpdateProductAction
 {
+    public function __construct(
+        private DatabaseManager $databaseManager,
+    ) {}
 
-    public function __invoke(UpdateProductDto $data, Product $product): Product
+    public function __invoke( UpdateProductDto $updateProductDto, Product $product): void
     {
-        DB::transaction(function () use ($data, $product) {
-            return Product::where('product_id', $product)->update([
-                'name' => $data->name,
-                'description' => $data->description,
-                'price' => $data->price
-            ]);
-        });
-
-        return $product;
+        $this->databaseManager->transaction(
+            fn (): bool => $product->update([
+                'name' => $updateProductDto->name,
+                'description' => $updateProductDto->description,
+                'price' => $updateProductDto->price,
+            ]),
+        );
     }
 }

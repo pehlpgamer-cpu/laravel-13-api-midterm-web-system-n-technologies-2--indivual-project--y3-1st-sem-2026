@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductCategoryRequest;
@@ -8,7 +7,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class ProductCategoryController
+readonly final class ProductCategoryController
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +20,7 @@ final class ProductCategoryController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductCategoryRequest $request): JsonResource
+    public function store(): JsonResource
     {
         return new JsonResource(Product::class);
     }
@@ -29,7 +28,7 @@ final class ProductCategoryController
     /**
      * Display the specified resource.
      */
-    public function show(ProductCategory $productCategory): JsonResource
+    public function show(): JsonResource
     {
         return new JsonResource(Product::class);
     }
@@ -37,7 +36,7 @@ final class ProductCategoryController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory): JsonResource
+    public function update(): JsonResource
     {
         return new JsonResource(Product::class);
     }
@@ -45,7 +44,7 @@ final class ProductCategoryController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductCategory $productCategory): JsonResource
+    public function destroy(): JsonResource
     {
         return new JsonResource(Product::class);
     }

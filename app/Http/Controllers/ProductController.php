@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace App\Http\Controllers;
 
 // ACTIONS
@@ -24,72 +23,31 @@ use App\Queries\ListProductsQuery;
 use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class ProductController
+readonly final class ProductController
 {
+    
     /**
      * Display a listing of the resource.
      */
-    #[QueryParameter(
-        name: 'page',
-        description: 'current page number.',
-        type: 'int',
-        default: 1,
-        example: 2,
-        required: false
-    )]
-    #[QueryParameter(
-        name: 'name',
-        description: 'product name.',
-        type: 'string',
-        default: null,
-        example: 'RTX 3060 TI GPU - 4GB VRAM',
-        required: false
-    )]
-    #[QueryParameter(
-        name: 'min_price',
-        description: 'minimum price.',
-        type: 'float',
-        default: null,
-        example: 10.00,
-        required: false
-    )]
-    #[QueryParameter(
-        name: 'max_price',
-        description: 'maximum price.',
-        type: 'float',
-        default: null,
-        example: 1000.00,
-        required: false
-    )]
-    #[QueryParameter(
-        name: 'sort',
-        description: 'order by attribute (asc or decs)',
-        type: 'string',
-        default: 'rating',
-        example: 'price',
-        required: false
-    )]
-    #[QueryParameter(
-        name: 'sort_order',
-        description: 'ascending or descending)',
-        type: 'string',
-        default: 'descending',
-        example: 'ascending',
-        required: false
-    )]
-    public function index(ListProductsRequest $request, ListProductsQuery $query): JsonResource
+    #[QueryParameter( name: 'page',       description: 'current page number.',             required: false, type: 'int',       default: 1,             example: 2)]
+    #[QueryParameter( name: 'name',       description: 'product name.',                    required: false, type: 'string',    default: null,          example: 'RTX 3060 TI GPU - 4GB VRAM')]
+    #[QueryParameter( name: 'min_price',  description: 'minimum price.',                   required: false, type: 'float',     default: null,          example: 10.00)]
+    #[QueryParameter( name: 'max_price',  description: 'maximum price.',                   required: false, type: 'float',     default: null,          example: 1000.00)]
+    #[QueryParameter( name: 'sort',       description: 'order by attribute (asc or decs)', required: false, type: 'string',    default: 'rating',      example: 'price')]
+    #[QueryParameter( name: 'sort_order', description: 'ascending or descending)',         required: false, type: 'string',    default: 'descending',  example: 'ascending')]
+    public function index(ListProductsRequest $listProductsRequest, SearchProductsDto $searchProductsDto, ListProductsQuery $listProductsQuery): JsonResource
     {
-        $data = SearchProductsDto::fromArray($request->validated());
-        return ProductResource::collection($query($data));
+        $data = $searchProductsDto::fromArray($listProductsRequest->validated());
+        return ProductResource::collection($listProductsQuery($data));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostProductRequest $request, PostProductAction $action): JsonResource
+    public function store(PostProductRequest $postProductRequest, CreateProductDto $createProductDto, PostProductAction $postProductAction): JsonResource
     {
-        $data = CreateProductDto::fromArray($request->validated());
-        return ProductResource::collection($action($data));
+        $data = $createProductDto::fromArray($postProductRequest->validated());
+        return ProductResource::collection($postProductAction($data));
     }
 
     /**
@@ -103,18 +61,18 @@ final class ProductController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product, UpdateProductAction $action): JsonResource
+    public function update(UpdateProductRequest $updateProductRequest, Product $product, UpdateProductAction $updateProductAction): JsonResource
     {
-        $data = UpdateProductDto::fromArray($request->validated());
-        return ProductResource::make($action($data, $product));
+        $updateProductDto = UpdateProductDto::fromArray($updateProductRequest->validated());
+        return ProductResource::make($updateProductAction($updateProductDto, $product));
     }
 
     /**
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Product $product, DeleteProductAction $action): JsonResource
+    public function destroy(Product $product, DeleteProductAction $deleteProductAction): JsonResource
     {
-        return ProductResource::collection($action($product));
+        return ProductResource::collection($deleteProductAction($product));
     }
 }

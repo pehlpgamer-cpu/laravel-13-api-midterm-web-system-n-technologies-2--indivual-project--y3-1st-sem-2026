@@ -1,3 +1,17 @@
 {
-    "preset": "laravel"
+    "preset": "laravel",
+    "rules": {
+        "simplified_null_return": true,
+
+        "statement_indentation": true,
+        "array_indentation": true,
+        "doctrine_annotation_indentation": true,
+        "method_chaining_indentation": true,
+        "phpdoc_indent": true,
+
+        "modifier_keywords": true,
+
+        "method_argument_space": false
+    },
+    "exclude": []
 }
