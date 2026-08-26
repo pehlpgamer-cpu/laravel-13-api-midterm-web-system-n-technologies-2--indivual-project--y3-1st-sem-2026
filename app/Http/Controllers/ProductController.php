@@ -25,7 +25,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 readonly final class ProductController
 {
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -44,10 +44,14 @@ readonly final class ProductController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostProductRequest $postProductRequest, CreateProductDto $createProductDto, PostProductAction $postProductAction): JsonResource
+    public function store(PostProductRequest $postProductRequest, PostProductAction $postProductAction)
     {
-        $data = $createProductDto::fromArray($postProductRequest->validated());
-        return ProductResource::collection($postProductAction($data));
+
+        // * FIXED the error: "message": "Unresolvable dependency resolving [Parameter #0 [ <required> string $name ]] in class App\\DTOs\\Product\\CreateProductDto",
+        // apparently method dependency injection of Dto is not possible, probably because of "Laravel ✨MAGIC✨"
+        // and Codex 5.6 Sol Ultra was not able to figure that out.
+        $data = CreateProductDto::fromArray($postProductRequest->validated());
+        $postProductAction($data);
     }
 
     /**

@@ -5,11 +5,12 @@ namespace App\Queries;
 
 use App\Models\Product;
 use App\DTOs\Product\SearchProductsDto;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 readonly final class ListProductsQuery
 {
     // ! FIX only "name" param works fine
-    public function __invoke(SearchProductsDto $searchProductsDto)
+    public function __invoke(SearchProductsDto $searchProductsDto): LengthAwarePaginator
     {
         $builder = Product::query();
 
