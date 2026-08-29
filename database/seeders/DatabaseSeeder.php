@@ -16,14 +16,19 @@ class DatabaseSeeder extends Seeder
     {
         // A-Z
         $this->call([
-            AuditTrailSeeder::class,
-            CartSeeder::class,
-            CategorySeeder::class,
-            InventorySeeder::class,
-            ProductSeeder::class,
-            ReviewSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+
+            InventorySeeder::class,
+
+
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ProductCategorySeeder::class,
+            
+            ReviewSeeder::class,
+            AuditTrailSeeder::class,
+            CartSeeder::class,
         ]);
     }
 }

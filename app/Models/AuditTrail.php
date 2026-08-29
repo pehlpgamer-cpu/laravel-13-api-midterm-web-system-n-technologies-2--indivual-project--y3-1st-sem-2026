@@ -10,4 +10,5 @@ class AuditTrail extends Model
 {
     /** @use HasFactory<AuditTrailFactory> */
     use HasFactory;
+    // No soft-delete!
 }

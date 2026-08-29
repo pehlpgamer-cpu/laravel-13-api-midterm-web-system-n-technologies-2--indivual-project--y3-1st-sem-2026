@@ -6,22 +6,23 @@ namespace App\Actions\Product;
 
 use App\DTOs\Product\UpdateProductDto;
 use App\Models\Product;
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\DB;
 
 final readonly class UpdateProductAction
 {
-    public function __construct(
-        private DatabaseManager $databaseManager,
-    ) {}
 
-    public function __invoke( UpdateProductDto $updateProductDto, Product $product): void
+
+    public function __invoke( UpdateProductDto $updateProductDto): void
     {
-        $this->databaseManager->transaction(
-            fn (): bool => $product->update([
-                'name' => $updateProductDto->name,
-                'description' => $updateProductDto->description,
-                'price' => $updateProductDto->price,
-            ]),
+        callback: DB::transaction(
+            function () use ($updateProductDto) {
+                Product::update([
+                    'name' => $updateProductDto->name,
+                    'description' => $updateProductDto->description,
+                    'price' => $updateProductDto->price,
+                ]);
+            },
+        attempts: 2
         );
     }
 }

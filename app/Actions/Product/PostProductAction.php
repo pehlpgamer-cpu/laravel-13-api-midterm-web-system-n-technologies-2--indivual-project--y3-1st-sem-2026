@@ -4,23 +4,33 @@ namespace App\Actions\Product;
 
 use App\DTOs\Product\CreateProductDto;
 use App\Models\Product;
-use Illuminate\Database\DatabaseManager;
+
+use Illuminate\Support\Facades\DB;
 
 readonly final class PostProductAction
 {
-    public function __construct(
-        private DatabaseManager $databaseManager,
-    ) {
-    }
-
-    public function __invoke(CreateProductDto $createProductDto): void
+    /**
+     * @return array{
+     *     statusCode: int,
+     * }
+    */
+    public function __invoke(CreateProductDto $createProductDto): array
     {
-        $this->databaseManager->transaction(
-            fn () => Product::query()->create([
-                'name' => $createProductDto->name,
-                'description' => $createProductDto->description,
-                'price' => $createProductDto->price,
-            ])
+        DB::transaction(
+            callback:
+                function () use ($createProductDto)
+                {
+                    Product::query()->create([
+                        'name' => $createProductDto->name,
+                        'description' => $createProductDto->description,
+                        'price' => $createProductDto->price,
+                    ]);
+                },
+            attempts: 2
         );
+
+        return [
+            'statusCode' => 201,
+        ];
     }
 }

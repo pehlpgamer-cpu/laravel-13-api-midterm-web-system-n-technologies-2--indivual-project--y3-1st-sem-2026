@@ -11,6 +11,7 @@ final readonly class LogoutDto
      * @param array{
      *      sessionToken: string
      * } $data
+     * @return self
      */
     public static function fromArray(array $data): self
     {

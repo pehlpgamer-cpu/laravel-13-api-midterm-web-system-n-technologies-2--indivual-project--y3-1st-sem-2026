@@ -3,7 +3,6 @@
 namespace App\Actions\Auth;
 
 use App\DTOs\Auth\LogoutDto;
-use Illuminate\Database\DatabaseManager;
 
 readonly final class LogoutAction
 {

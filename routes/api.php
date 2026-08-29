@@ -31,10 +31,6 @@ Route::middleware(['throttle:api'])->group(function () {
         Route::apiResource('/inventory-items', InventoryController::class);
 
         Route::apiResource('/users', UserController::class);
-        // Route::apiResource('/roles', RoleController::class);
-
-        //
-
         Route::apiResource('/audit-trails', AuditTrailController::class)->except(['destroy', 'update']);
     });
 });

@@ -15,6 +15,7 @@ final readonly class CreateProductDto
      *     description?: string|null,
      *     price: float|int
      * } $data
+     * @return self
      */
     public static function fromArray(array $data): self
     {

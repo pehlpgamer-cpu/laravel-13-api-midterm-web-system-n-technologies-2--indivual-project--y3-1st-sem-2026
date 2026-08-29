@@ -13,6 +13,7 @@ final readonly class LoginDto
      *      email: string,
      *      password: string
      * } $data
+     * @return self
      */
     public static function fromArray(array $data): self
     {

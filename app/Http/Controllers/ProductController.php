@@ -46,12 +46,9 @@ readonly final class ProductController
      */
     public function store(PostProductRequest $postProductRequest, PostProductAction $postProductAction)
     {
-
-        // * FIXED the error: "message": "Unresolvable dependency resolving [Parameter #0 [ <required> string $name ]] in class App\\DTOs\\Product\\CreateProductDto",
-        // apparently method dependency injection of Dto is not possible, probably because of "Laravel ✨MAGIC✨"
-        // and Codex 5.6 Sol Ultra was not able to figure that out.
         $data = CreateProductDto::fromArray($postProductRequest->validated());
-        $postProductAction($data);
+        $response = $postProductAction($data);
+        return response(status: $response['statusCode']);
     }
 
     /**

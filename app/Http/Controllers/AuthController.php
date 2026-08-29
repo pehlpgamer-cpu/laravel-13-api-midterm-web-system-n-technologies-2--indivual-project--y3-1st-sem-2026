@@ -18,22 +18,19 @@ use Illuminate\Http\Resources\Json\JsonResource;
 // ? https://www.souysoeng.com/2025/12/laravel-12-vue-3-authentication.html
 readonly final class AuthController
 {
-    public function __construct(
-        private UserResource $userResource
-    ){}
 
     public function signup(SignupRequest $signupRequest, SignupDto $signupDto, SignupAction $signupAction): JsonResource
     {
         $data = $signupDto::fromArray($signupRequest->validated());
         $result = $signupAction($data);
-        return $this->userResource::make($result);
+        return UserResource::make($result);
     }
 
     public function login(LoginRequest $loginRequest, LoginDto $loginDto, LoginAction $loginAction): JsonResource
     {
         $data = $loginDto::fromArray($loginRequest->validated());
         $result = $loginAction($data);
-        return $this->userResource::make($result);
+        return UserResource::make($result);
     }
 
     public function logout(LogoutRequest $logoutRequest, LogoutDto $logoutDto, LogoutAction $logoutAction): JsonResponse
