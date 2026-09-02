@@ -1,23 +1,28 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\JsonApi\JsonApiResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonApiResource
+final class UserResource extends JsonResource
 {
     /**
-     * The resource's attributes.
+     * @return array<string, mixed>
      */
-    public $attributes = [
-        // ...
-    ];
+    public function toArray(Request $request): array
+    {
+        /** @var User $user */
+        $user = $this->resource;
 
-    /**
-     * The resource's relationships.
-     */
-    public $relationships = [
-        // ...
-    ];
+        return [
+            'id' => $user->getKey(),
+            'name' => $user->name,
+            'email' => $user->email,
+            'email_verified_at' => $user->email_verified_at?->toISOString(),
+        ];
+    }
 }

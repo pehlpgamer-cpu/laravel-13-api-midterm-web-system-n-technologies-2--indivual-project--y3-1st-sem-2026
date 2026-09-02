@@ -1,42 +1,97 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Actions\Auth\LoginAction;
-use App\Actions\Auth\LogoutAction;
-use App\Actions\Auth\SignupAction;
-use App\DTOs\Auth\LoginDto;
-use App\DTOs\Auth\LogoutDto;
-use App\DTOs\Auth\SignupDto;
+use App\Auth\JwtTokenService;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\LogoutRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\SignupRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
-// * seems like this guide is incompatible with my api...
-// ? https://www.souysoeng.com/2025/12/laravel-12-vue-3-authentication.html
-readonly final class AuthController
+final class AuthController
 {
-
-    public function signup(SignupRequest $signupRequest, SignupDto $signupDto, SignupAction $signupAction): JsonResource
-    {
-        $data = $signupDto::fromArray($signupRequest->validated());
-        $result = $signupAction($data);
-        return UserResource::make($result);
+    public function __construct(
+        private readonly JwtTokenService $tokens,
+    ) {
     }
 
-    public function login(LoginRequest $loginRequest, LoginDto $loginDto, LoginAction $loginAction): JsonResource
+    public function register(SignupRequest $request): JsonResponse
     {
-        $data = $loginDto::fromArray($loginRequest->validated());
-        $result = $loginAction($data);
-        return UserResource::make($result);
+        $user = User::query()->create(
+            $request->safe()->only(['name', 'email', 'password']),
+        );
+
+        return $this->tokenResponse(
+            token: $this->tokens->issueFor($user),
+            status: Response::HTTP_CREATED,
+        );
     }
 
-    public function logout(LogoutRequest $logoutRequest, LogoutDto $logoutDto, LogoutAction $logoutAction): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $data = $logoutDto::fromArray($logoutRequest->validated());
-        $result = $logoutAction($data);
-        return response()->json([]);
+        $token = $this->tokens->attempt(
+            $request->safe()->only(['email', 'password']),
+        );
+
+        if ($token === null) {
+            return response()->json([
+                'message' => 'The provided credentials are incorrect.',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return $this->tokenResponse($token);
+    }
+
+    public function me(Request $request): UserResource
+    {
+        /** @var User $user */
+        $user = $request->user('api');
+
+        return new UserResource($user);
+    }
+
+    public function refresh(): JsonResponse
+    {
+        try {
+            return $this->tokenResponse($this->tokens->refresh());
+        } catch (JWTException) {
+            return response()->json([
+                'message' => 'The token is invalid or can no longer be refreshed.',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    public function logout(): Response
+    {
+        try {
+            $this->tokens->invalidate();
+        } catch (JWTException) {
+            return response()->json([
+                'message' => 'The token is invalid.',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return response()->noContent();
+    }
+
+    private function tokenResponse(
+        string $token,
+        int $status = Response::HTTP_OK,
+    ): JsonResponse {
+        return response()->json([
+            'data' => [
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'expires_in' => $this->tokens->ttlSeconds(),
+            ],
+        ], $status);
     }
 }

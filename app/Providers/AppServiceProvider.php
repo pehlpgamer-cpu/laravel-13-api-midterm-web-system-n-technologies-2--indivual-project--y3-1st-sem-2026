@@ -6,12 +6,13 @@ namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\DevCommands;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,7 +37,8 @@ class AppServiceProvider extends ServiceProvider
         // DevCommands::only('server');
         // DevCommands::only('queue');
 
-        $this->rateLimiters();
+        //$this->rateLimiters();
+        $this->jwtAuthRateLimit();
         $this->configureModels();
         $this->configureUrl();
         $this->configureCommands();
@@ -52,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
     private function configureModels(): void
     {
         Model::shouldBeStrict();
-        Model::unguard(); // "for faster development"
+        // Model::unguard(); // "for faster development"
         Model::preventLazyLoading(! $this->app->environment('production'));
     }
 
@@ -63,14 +65,29 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    private function rateLimiters(): void
+    private function jwtAuthRateLimit()
     {
-        RateLimiter::for('api', function () {
-            return Limit::perMinute(30); // temporary
+        RateLimiter::for('login', function (Request $request): array {
+            $email = Str::lower(
+                trim((string) $request->input('email')),
+            );
+
+            return [
+                Limit::perMinute(5)
+                    ->by($email.'|'.$request->ip()),
+
+                Limit::perMinute(30)
+                    ->by((string) $request->ip()),
+            ];
         });
 
-        RateLimiter::for('customer', fn() => Limit::perMinute(60));
+        RateLimiter::for('refresh', fn (Request $request): Limit =>
+            Limit::perMinute(30)->by((string) $request->ip())
+        );
+    }
 
-        RateLimiter::for('admin', fn() => Limit::perMinute(2000));
+    private function rateLimiters(): void
+    {
+        // TODO
     }
 }

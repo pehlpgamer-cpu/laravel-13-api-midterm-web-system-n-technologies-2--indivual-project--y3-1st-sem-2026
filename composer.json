@@ -14,10 +14,9 @@
         "laravel/framework": "^13.8",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
-        "spatie/laravel-backup": "*"
+        "tymon/jwt-auth": "^2.3"
     },
     "require-dev": {
-        "albertoarena/laravel-truss": "^1.7",
         "barryvdh/laravel-ide-helper": "^3.7",
         "driftingly/rector-laravel": "^2.5",
         "fakerphp/faker": "^1.23",

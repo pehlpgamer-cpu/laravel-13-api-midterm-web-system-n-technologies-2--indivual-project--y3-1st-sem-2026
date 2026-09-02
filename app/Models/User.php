@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Override;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[Table(
     name: 'users',
@@ -31,15 +32,28 @@ use Laravel\Sanctum\HasApiTokens;
     'remember_token'
 ])]
 
-#[UsePolicy(UserPolicy::class)]
+//#[UsePolicy(UserPolicy::class)]
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
+
+    #[Override]
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+    /**
+     * @return array<string, mixed>
+     */
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
+
+
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
