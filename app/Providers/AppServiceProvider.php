@@ -6,13 +6,13 @@ namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Request;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         // DevCommands::only('server');
         // DevCommands::only('queue');
 
-        //$this->rateLimiters();
+        // $this->rateLimiters();
         $this->jwtAuthRateLimit();
         $this->configureModels();
         $this->configureUrl();
@@ -81,8 +81,7 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
-        RateLimiter::for('refresh', fn (Request $request): Limit =>
-            Limit::perMinute(30)->by((string) $request->ip())
+        RateLimiter::for('refresh', fn (Request $request): Limit => Limit::perMinute(30)->by((string) $request->ip())
         );
     }
 

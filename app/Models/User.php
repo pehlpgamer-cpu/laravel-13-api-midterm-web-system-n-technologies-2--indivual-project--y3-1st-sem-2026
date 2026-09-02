@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -16,23 +18,20 @@ use Illuminate\Notifications\Notifiable;
 use Override;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-#[Table(
-    name: 'users',
-    key: 'user_id'
-)]
+#[Table(name: 'users')]
 
 #[Fillable([
     'name',
     'email',
-    'password'
+    'password',
 ])]
 
 #[Hidden([
     'password',
-    'remember_token'
+    'remember_token',
 ])]
 
-//#[UsePolicy(UserPolicy::class)]
+// #[UsePolicy(UserPolicy::class)]
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -43,6 +42,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
+
     /**
      * @return array<string, mixed>
      */
@@ -51,14 +51,14 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-
-
     /**
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
             'role' => UserRole::class,
         ];
     }

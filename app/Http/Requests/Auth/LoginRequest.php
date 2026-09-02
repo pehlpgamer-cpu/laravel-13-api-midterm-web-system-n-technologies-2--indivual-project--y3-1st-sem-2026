@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Str;
 
 class LoginRequest extends FormRequest
@@ -18,7 +19,7 @@ class LoginRequest extends FormRequest
     }
 
     // TODO - learn this laravel validation feature
-    //! Do not use "exists:users,email" here. That can reveal whether an email address is registered.
+    // ! Do not use "exists:users,email" here. That can reveal whether an email address is registered.
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -35,18 +36,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email', 'min:12', 'max:255'],
-            'password' => [
-                'required',
-                'string',
-                'confirmed',
-                Password::min(15)
-                ->max(64)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols()
-                ->uncompromised(),
-            ],
+            'password' => ['required', 'string', 'max:64'],
         ];
     }
 }
