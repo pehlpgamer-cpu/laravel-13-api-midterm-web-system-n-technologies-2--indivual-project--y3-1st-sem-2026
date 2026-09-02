@@ -16,6 +16,7 @@ readonly final class PostProductAction
     */
     public function __invoke(CreateProductDto $createProductDto): array
     {
+        $statusCode = 201;
         DB::transaction(
             callback:
                 function () use ($createProductDto)
@@ -30,7 +31,7 @@ readonly final class PostProductAction
         );
 
         return [
-            'statusCode' => 201,
+            'statusCode' => $statusCode,
         ];
     }
 }

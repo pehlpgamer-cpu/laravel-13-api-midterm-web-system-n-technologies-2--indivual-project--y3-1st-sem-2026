@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
                 'min:10',
                 'max:32',
                 'string',
+                'unique:products,name'
             ],
             'description' => [
                 'max:512',

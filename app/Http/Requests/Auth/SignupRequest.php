@@ -24,8 +24,8 @@ class SignupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['string', 'required', 'min:8', 'max:16'],
-            'email' => ['string', 'required', 'email'],
+            'username' => ['string', 'required', 'min:8', 'max:16', 'unique:users,username'],
+            'email' => ['string', 'required', 'email', 'unique:users,email'],
             'password' => [
                 'required',
                 'string',
