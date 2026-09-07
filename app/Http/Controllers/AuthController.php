@@ -1,13 +1,9 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Auth\JwtTokenService;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\SignupRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -16,17 +12,17 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-final class AuthController
+final readonly class AuthController
 {
     public function __construct(
         private readonly JwtTokenService $tokens,
     ) {
     }
 
-    public function register(SignupRequest $request): JsonResponse
+    public function register(SignupRequest $signupRequest): JsonResponse
     {
         $user = User::query()->create(
-            $request->safe()->only(['name', 'email', 'password']),
+            $signupRequest->safe()->only(['name', 'email', 'password']),
         );
 
         return $this->tokenResponse(
@@ -35,10 +31,10 @@ final class AuthController
         );
     }
 
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $loginRequest): JsonResponse
     {
         $token = $this->tokens->attempt(
-            $request->safe()->only(['email', 'password']),
+            $loginRequest->safe()->only(['email', 'password']),
         );
 
         if ($token === null) {

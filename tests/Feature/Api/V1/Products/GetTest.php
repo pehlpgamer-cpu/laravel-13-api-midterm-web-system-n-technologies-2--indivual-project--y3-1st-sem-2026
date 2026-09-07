@@ -8,13 +8,26 @@ use function Pest\Laravel\seed;
 
 describe("Single", function() {
     test('record that exist', function() {
-        // Product::factory()->create();
         seed(ProductSeeder::class);
         $response = getJson("api/v1/products/1");
 
         $response
             ->assertJsonStructure(["data"])
             ->assertOk();
+    });
+
+    test('trashed record as non-Admin role', function() {
+
+        // seed(ProductSeeder::class);
+        // $response = getJson("api/v1/products/1");
+
+        // $response
+        //     ->assertJsonStructure(["data"])
+        //     ->assertOk();
+    });
+
+    test('trashed record as Admin role', function() {
+
     });
 });
 

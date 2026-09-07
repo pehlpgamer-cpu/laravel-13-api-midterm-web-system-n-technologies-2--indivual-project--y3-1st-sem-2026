@@ -9,10 +9,23 @@ use Illuminate\Support\Facades\DB;
 
 final readonly class DeleteProductAction
 {
-    public function __invoke(Product $product): void
+    /**
+     * @return array [
+     *      httpStatus: int
+     *  ]
+     */
+    public function __invoke(Product $product): array
     {
+
+        if ($product->trashed())
+            return [ 'httpStatus' => 404 ];
+
         DB::transaction(
-            fn (): bool|null => $product->delete(),
+            callback: function() use ($product){
+                $product->delete();
+            },
+            attempts: 2
         );
+        return [ 'httpStatus' => 200 ];
     }
 }

@@ -523,9 +523,5 @@ class ProductSeeder extends Seeder
                 'price' => $i['price'],
             ]);
         }
-
-        // Product::insert($products); // <-- this causes a sql error
-
-        // Product::factory()->count(100)->create();
     }
 }

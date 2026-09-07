@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\DTOs\Product;
 
-final readonly class SearchProductsDto
+final readonly class QueryProductsDto
 {
     public function __construct(
         public ?string $name,

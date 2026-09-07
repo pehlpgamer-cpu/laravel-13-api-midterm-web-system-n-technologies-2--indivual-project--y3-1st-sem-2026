@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Product\DeleteProductAction;
 use App\Actions\Product\PostProductAction;
 use App\Actions\Product\UpdateProductAction;
+use App\Actions\Product\QueryProductsAction;
 
 // REQUEST
 use App\Http\Requests\Product\ListProductsRequest;
@@ -13,15 +14,16 @@ use App\Http\Requests\Product\UpdateProductRequest;
 
 // DTO
 use App\DTOs\Product\CreateProductDto;
-use App\DTOs\Product\SearchProductsDto;
+use App\DTOs\Product\QueryProductsDto;
 use App\DTOs\Product\UpdateProductDto;
 
 // ETC
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Queries\ListProductsQuery;
 use Dedoc\Scramble\Attributes\QueryParameter;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+
 
 readonly final class ProductController
 {
@@ -35,10 +37,10 @@ readonly final class ProductController
     #[QueryParameter( name: 'max_price',  description: 'maximum price.',                   required: false, type: 'float',     default: null,          example: 1000.00)]
     #[QueryParameter( name: 'sort',       description: 'order by attribute (asc or decs)', required: false, type: 'string',    default: 'rating',      example: 'price')]
     #[QueryParameter( name: 'sort_order', description: 'ascending or descending)',         required: false, type: 'string',    default: 'descending',  example: 'ascending')]
-    public function index(ListProductsRequest $listProductsRequest, SearchProductsDto $searchProductsDto, ListProductsQuery $listProductsQuery): JsonResource
+    public function index(ListProductsRequest $listProductsRequest, QueryProductsDto $queryProductsDto, QueryProductsAction $queryProductsAction): JsonResource
     {
-        $data = $searchProductsDto::fromArray($listProductsRequest->validated());
-        return ProductResource::collection($listProductsQuery($data));
+        $data = $queryProductsDto::fromArray($listProductsRequest->validated());
+        return ProductResource::collection($queryProductsAction($data));
     }
 
     /**
@@ -72,8 +74,9 @@ readonly final class ProductController
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Product $product, DeleteProductAction $deleteProductAction): JsonResource
+    public function destroy(Product $product, DeleteProductAction $deleteProductAction): JsonResponse
     {
-        return ProductResource::collection($deleteProductAction($product));
+        $response = $deleteProductAction($product);
+        return response()->json([], $response['httpStatus']);
     }
 }
