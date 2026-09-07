@@ -8,20 +8,17 @@ final readonly class QueryProductsAction
 {
     function __invoke(QueryProductsDto $queryProductsDto): LengthAwarePaginator
     {
-        // ! FIX only "name" param works fine
-        $builder = Product::query();
-
+        $query = Product::query();
         if ($queryProductsDto->name !== null) {
-            $builder->orWhere('name', 'like', '%' . $queryProductsDto->name . '%');
+            $query->orWhere('name', 'like', '%' . $queryProductsDto->name . '%');
         }
 
-        if ($queryProductsDto->minPrice !== null) {
-            $builder->orWhere('price', '>=', $queryProductsDto->minPrice);
-        }
+        if ($queryProductsDto->minPrice !== null)
+            $query->where('price', '>=', $queryProductsDto->minPrice);
 
-        if ($queryProductsDto->maxPrice !== null) {
-            $builder->orWhere('price', '<=', $queryProductsDto->maxPrice);
-        }
+
+        if ($queryProductsDto->maxPrice !== null)
+            $query->where('price', '<=', $queryProductsDto->maxPrice);
 
         $sortOrder = ($queryProductsDto->sortOrder && $queryProductsDto->sortOrder === 'asc') ?
             'asc' : 'desc';
@@ -33,13 +30,13 @@ final readonly class QueryProductsAction
                 case 'name':
 
                 case 'rating':
-                    $builder->orderBy($queryProductsDto->sort, $sortOrder);
+                    $query->orderBy($queryProductsDto->sort, $sortOrder);
                     break;
 
                 default:
             }
         }
-        return $builder->paginate(15);
+        return $query->paginate(15);
     }
 }
 

@@ -25,8 +25,8 @@ class ListProductsRequest extends FormRequest
         return [
             'page' => ['integer'],
             'name' => ['string'],
-            'min_price' => ['numeric'],
-            'max_price' => ['numeric'],
+            'min_price' => ['decimal:2'],
+            'max_price' => ['decimal:2'],
             'sort' => ['string'],
             'sort_order' => ['string'],
         ];

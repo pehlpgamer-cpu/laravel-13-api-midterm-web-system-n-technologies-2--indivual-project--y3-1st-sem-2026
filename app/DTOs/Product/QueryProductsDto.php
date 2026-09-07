@@ -17,8 +17,8 @@ final readonly class QueryProductsDto
      *     name?: string|null,
      *     sort?: string|null,
      *     sortOrder?: string|null,
-     *     minPrice?: float|int|null,
-     *     maxPrice?: float|int|null
+     *     minPrice?: float|null,
+     *     maxPrice?: float|null
      * } $data
      */
     public static function fromArray(array $data): self
@@ -26,14 +26,14 @@ final readonly class QueryProductsDto
         return new self(
             name: $data['name'] ?? null,
             sort: $data['sort'] ?? null,
-            sortOrder: $data['sortOrder'] ?? null,
+            sortOrder: $data['sort_order'] ?? null,
             minPrice:
-                isset($data['minPrice'])
-                ? (float) $data['minPrice']
+                isset($data['min_price'])
+                ? (float) $data['min_price']
                 : null,
             maxPrice:
-                isset($data['maxPrice'])
-                ? (float) $data['maxPrice']
+                isset($data['max_price'])
+                ? (float) $data['max_price']
                 : null,
         );
     }
