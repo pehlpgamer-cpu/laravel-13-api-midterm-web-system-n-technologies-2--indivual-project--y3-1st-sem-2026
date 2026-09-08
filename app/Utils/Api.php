@@ -12,9 +12,14 @@ final readonly class Api
      * @param string $path  Examples: "/1", "?name=paulo", ""
      * @return string "/api/" . $v->value . "/" . $r->value . $path
      */
-    static public function uriPath(ApiVersion $v, Resource $r, ?string $path = ""): string
+    static public function uriPath(ApiVersion $v, ?Resource $r = null, ?string $path = ""): string
     {
-        return "/api/" . $v->value . "/" . $r->value . $path;
+        if ($r === null)
+            $resource = "";
+        else
+            $resource = "/" . $r->value;
+
+        return "/api/" . $v->value . $resource . $path;
     }
 
 }

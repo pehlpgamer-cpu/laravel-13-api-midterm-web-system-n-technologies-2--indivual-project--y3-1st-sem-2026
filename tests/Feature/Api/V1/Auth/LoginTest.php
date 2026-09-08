@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+use App\Enums\ApiVersion;
+use App\Enums\Resource;
 use App\Models\User;
 
 
@@ -17,7 +19,7 @@ use App\Utils\Api;
             'password' => $password,
         ]);
 
-        $response = postJson(Api::v1('/auth/login'), [
+        $response = postJson(Api::uriPath(v: ApiVersion::V1, path: '/auth/login'), [
             'email' => $user->email,
             'password' => $password,
         ])
@@ -33,7 +35,7 @@ use App\Utils\Api;
         $token = $response->json('data.access_token');
 
         withToken($token)
-            ->getJson(Api::v1('/auth/me'))
+            ->getJson(Api::uriPath(v: ApiVersion::V1, path: '/auth/me'))
             ->assertOk()
             ->assertJsonPath('data.id', $user->getKey());
     });
@@ -45,7 +47,7 @@ use App\Utils\Api;
             'password' => 'correct-Password-1234567890',
         ]);
 
-        postJson(Api::v1('/auth/login'), [
+        postJson(Api::uriPath(v: ApiVersion::V1, path:'/auth/login'), [
             'email' => 'bro@example.com',
             'password' => 'wrong-Password-1234567890',
         ])->assertUnauthorized()
@@ -63,24 +65,24 @@ use App\Utils\Api;
             'password' => $password,
         ]);
 
-        $oldToken = postJson(Api::v1('/auth/login'), [
+        $oldToken = postJson(Api::uriPath(v: ApiVersion::V1, path:'/auth/login'), [
             'email' => $user->email,
             'password' => $password,
         ])->json('data.access_token');
 
         $newToken = withToken($oldToken)
-            ->postJson(Api::v1('/auth/refresh'))
+            ->postJson(Api::uriPath(v: ApiVersion::V1, path:'/auth/refresh'))
             ->assertOk()
             ->json('data.access_token');
 
         expect($newToken)->not->toBe($oldToken);
 
         withToken($oldToken)
-            ->getJson(Api::v1('/auth/me'))
+            ->getJson(Api::uriPath(v: ApiVersion::V1, path:'/auth/me'))
             ->assertUnauthorized();
 
         withToken($newToken)
-            ->getJson(Api::v1('/auth/me'))
+            ->getJson(Api::uriPath(v: ApiVersion::V1, path:'/auth/me'))
             ->assertOk();
     });
 
