@@ -14,7 +14,7 @@ final readonly class UpdateProductDto
      * @param array{
      *     name?: string|null,
      *     description?: string|null,
-     *     price?: float|int|null
+     *     price?: float|null
      * } $data
      */
     public static function fromArray(array $data): self

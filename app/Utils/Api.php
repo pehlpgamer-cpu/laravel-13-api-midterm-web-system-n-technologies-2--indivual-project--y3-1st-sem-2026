@@ -2,16 +2,19 @@
 
 namespace App\Utils;
 
+use App\Enums\ApiVersion;
+use App\Enums\Resource;
+
 final readonly class Api
 {
+
     /**
-     * @param string $path
-     * Example: "/products"
-     * @return string "/api/v1".$path
+     * @param string $path  Examples: "/1", "?name=paulo", ""
+     * @return string "/api/" . $v->value . "/" . $r->value . $path
      */
-    static public function v1(string $path): string
+    static public function uriPath(ApiVersion $v, Resource $r, ?string $path = ""): string
     {
-        return "/api/v1".$path;
+        return "/api/" . $v->value . "/" . $r->value . $path;
     }
 
 }

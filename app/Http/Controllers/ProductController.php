@@ -64,10 +64,10 @@ readonly final class ProductController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $updateProductRequest, Product $product, UpdateProductAction $updateProductAction): JsonResource
+    public function update(UpdateProductRequest $updateProductRequest, Product $product, UpdateProductAction $updateProductAction)
     {
         $updateProductDto = UpdateProductDto::fromArray($updateProductRequest->validated());
-        return ProductResource::make($updateProductAction($updateProductDto, $product));
+        $updateProductAction($updateProductDto, $product);
     }
 
     /**

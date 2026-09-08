@@ -12,17 +12,21 @@ final readonly class UpdateProductAction
 {
 
 
-    public function __invoke( UpdateProductDto $updateProductDto): void
+    public function __invoke(UpdateProductDto $updateProductDto, Product $product): void
     {
-        callback: DB::transaction(
-            function () use ($updateProductDto) {
-                Product::update([
-                    'name' => $updateProductDto->name,
-                    'description' => $updateProductDto->description,
-                    'price' => $updateProductDto->price,
-                ]);
+        DB::transaction(
+            callback: function () use ($updateProductDto, $product)
+            {
+                if ($updateProductDto->name !== null)
+                    $product->update(['name' => $updateProductDto->name,]);
+
+                if ($updateProductDto->description !== null)
+                    $product->update(['description' => $updateProductDto->description,]);
+
+                if ($updateProductDto->price !== null)
+                    $product->update(['price' => $updateProductDto->price,]);
             },
-        attempts: 2
+            attempts: 2
         );
     }
 }

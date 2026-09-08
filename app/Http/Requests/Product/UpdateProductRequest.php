@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Models\Product;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -24,20 +26,17 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => [
-                'required',
                 'min:10',
                 'max:32',
                 'string',
-                'unique:products,name'
+                Rule::unique(Product::class, 'name')
             ],
             'description' => [
                 'max:512',
                 'string',
-                'nullable',
             ],
             'price' => [
-                'required',
-                'integer',
+                'decimal:2',
             ],
         ];
     }
