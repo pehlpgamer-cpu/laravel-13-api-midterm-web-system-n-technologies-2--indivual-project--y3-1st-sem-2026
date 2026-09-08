@@ -33,10 +33,10 @@ readonly final class ProductController
      */
     #[QueryParameter( name: 'page',       description: 'current page number.',             required: false, type: 'int',       default: 1,             example: 2)]
     #[QueryParameter( name: 'name',       description: 'product name.',                    required: false, type: 'string',    default: null,          example: 'RTX 3060 TI GPU - 4GB VRAM')]
-    #[QueryParameter( name: 'min_price',  description: 'minimum price.',                   required: false, type: 'float',     default: null,          example: 10.00)]
-    #[QueryParameter( name: 'max_price',  description: 'maximum price.',                   required: false, type: 'float',     default: null,          example: 1000.00)]
+    #[QueryParameter( name: 'minPrice',  description: 'minimum price.',                   required: false, type: 'float',     default: null,          example: 10.00)]
+    #[QueryParameter( name: 'maxPrice',  description: 'maximum price.',                   required: false, type: 'float',     default: null,          example: 1000.00)]
     #[QueryParameter( name: 'sort',       description: 'order by attribute (asc or decs)', required: false, type: 'string',    default: 'rating',      example: 'price')]
-    #[QueryParameter( name: 'sort_order', description: 'ascending or descending)',         required: false, type: 'string',    default: 'descending',  example: 'ascending')]
+    #[QueryParameter( name: 'sortOrder', description: 'ascending or descending)',         required: false, type: 'string',    default: 'descending',  example: 'ascending')]
     public function index(ListProductsRequest $listProductsRequest, QueryProductsDto $queryProductsDto, QueryProductsAction $queryProductsAction): JsonResource
     {
         $data = $queryProductsDto::fromArray($listProductsRequest->validated());

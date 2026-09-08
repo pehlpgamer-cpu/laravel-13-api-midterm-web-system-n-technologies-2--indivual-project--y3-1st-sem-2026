@@ -26,14 +26,14 @@ final readonly class QueryProductsDto
         return new self(
             name: $data['name'] ?? null,
             sort: $data['sort'] ?? null,
-            sortOrder: $data['sort_order'] ?? null,
+            sortOrder: $data['sortOrder'] ?? null,
             minPrice:
-                isset($data['min_price'])
-                ? (float) $data['min_price']
+                isset($data['minPrice'])
+                ? (float) $data['minPrice']
                 : null,
             maxPrice:
-                isset($data['max_price'])
-                ? (float) $data['max_price']
+                isset($data['maxPrice'])
+                ? (float) $data['maxPrice']
                 : null,
         );
     }
