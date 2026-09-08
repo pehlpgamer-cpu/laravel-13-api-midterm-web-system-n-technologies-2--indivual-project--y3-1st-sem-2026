@@ -14,10 +14,15 @@ arch("Only External Validation")
     ->toBeClasses()
     ->not->toUse('App\Http\Request');
 
-arch('Readonly & Final')
+arch('Final class')
     ->expect($namespace)
-    ->toBeFinal()
-    ->toBeReadonly();
+    ->toBeClasses()
+    ->toBeFinal();
+
+arch('NOT a readonly class')
+    ->expect($namespace)
+    ->toBeClasses()
+    ->not->toBeReadonly();
 
 arch('Attributes')
     ->expect($namespace)

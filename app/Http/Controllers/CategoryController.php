@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class CategoryController
+final class CategoryController
 {
     /**
      * Display a listing of the resource.

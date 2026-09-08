@@ -6,7 +6,7 @@ use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class CartController
+final class CartController
 {
     /**
      * Display a listing of the resource.

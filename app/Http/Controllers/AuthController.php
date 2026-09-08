@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-final readonly class AuthController
+final class AuthController
 {
     public function __construct(
         private readonly JwtTokenService $tokens,

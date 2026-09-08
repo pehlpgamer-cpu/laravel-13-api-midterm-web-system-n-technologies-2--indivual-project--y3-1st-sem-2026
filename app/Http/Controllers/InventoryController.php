@@ -6,7 +6,7 @@ use App\Http\Requests\UpdateInventoryRequest;
 use App\Models\Inventory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class InventoryController
+final class InventoryController
 {
     /**
      * Display a listing of the resource.

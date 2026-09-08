@@ -7,7 +7,7 @@ use App\Models\Inventory;
 use App\Models\InventoryItem;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class InventoryItemController
+final class InventoryItemController
 {
     /**
      * Display a listing of the resource.

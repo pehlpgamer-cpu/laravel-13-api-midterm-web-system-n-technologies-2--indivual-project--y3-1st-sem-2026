@@ -25,7 +25,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
-readonly final class ProductController
+final class ProductController
 {
 
     /**

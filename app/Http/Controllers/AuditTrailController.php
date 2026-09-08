@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAuditTrailRequest;
 use App\Models\AuditTrail;
 use Illuminate\Http\Resources\Json\JsonResource;
-readonly final class AuditTrailController
+final class AuditTrailController
 {
     /**
      * Display a listing of the resource.

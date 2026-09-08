@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class UserController
+final class UserController
 {
     /**
      * Display a listing of the resource.

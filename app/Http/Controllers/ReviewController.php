@@ -6,7 +6,7 @@ use App\Http\Requests\UpdateReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class ReviewController
+final class ReviewController
 {
     /**
      * Display a listing of the resource.

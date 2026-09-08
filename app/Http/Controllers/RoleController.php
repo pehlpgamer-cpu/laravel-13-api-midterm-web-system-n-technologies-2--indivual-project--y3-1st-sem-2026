@@ -6,7 +6,7 @@ use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class RoleController
+final class RoleController
 {
     /**
      * Display a listing of the resource.

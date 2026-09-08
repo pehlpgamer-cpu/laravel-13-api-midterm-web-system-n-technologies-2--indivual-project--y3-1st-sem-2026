@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-readonly final class ProductCategoryController
+final class ProductCategoryController
 {
     /**
      * Display a listing of the resource.
