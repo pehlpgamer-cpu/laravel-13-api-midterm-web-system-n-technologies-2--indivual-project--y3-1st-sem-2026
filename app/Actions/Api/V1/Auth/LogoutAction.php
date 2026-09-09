@@ -2,7 +2,7 @@
 
 namespace App\Actions\Api\V1\Auth;
 
-use App\DTOs\V1\Auth\LogoutDto;
+use App\DTOs\Api\V1\Auth\LogoutDto;
 
 readonly final class LogoutAction
 {
