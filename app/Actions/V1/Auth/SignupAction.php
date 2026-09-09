@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Actions\Auth;
+namespace App\Actions\V1\Auth;
 
 use App\DTOs\Auth\SignupDto;
 use App\Models\User;

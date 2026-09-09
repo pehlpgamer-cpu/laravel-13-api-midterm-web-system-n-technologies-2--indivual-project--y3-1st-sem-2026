@@ -2,10 +2,10 @@
 namespace App\Http\Controllers;
 
 // ACTIONS
-use App\Actions\Product\DeleteProductAction;
-use App\Actions\Product\PostProductAction;
-use App\Actions\Product\UpdateProductAction;
-use App\Actions\Product\QueryProductsAction;
+use App\Actions\V1\Product\DeleteProductAction;
+use App\Actions\V1\Product\PostProductAction;
+use App\Actions\V1\Product\UpdateProductAction;
+use App\Actions\V1\Product\QueryProductsAction;
 
 // REQUEST
 use App\Http\Requests\Product\ListProductsRequest;

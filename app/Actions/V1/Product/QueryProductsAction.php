@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace App\Actions\Product;
+namespace App\Actions\V1\Product;
 use App\DTOs\Product\QueryProductsDto;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
