@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace App\DTOs\Auth;
+namespace App\DTOs\V1\Auth;
 
 final readonly class LogoutDto
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\V1\Product;
 
-use App\DTOs\Product\UpdateProductDto;
+use App\DTOs\V1\Product\UpdateProductDto;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 

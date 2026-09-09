@@ -2,7 +2,7 @@
 
 namespace App\Actions\V1\Auth;
 
-use App\DTOs\Auth\LoginDto;
+use App\DTOs\V1\Auth\LoginDto;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 

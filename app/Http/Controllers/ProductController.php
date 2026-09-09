@@ -13,9 +13,9 @@ use App\Http\Requests\Product\PostProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 
 // DTO
-use App\DTOs\Product\CreateProductDto;
-use App\DTOs\Product\QueryProductsDto;
-use App\DTOs\Product\UpdateProductDto;
+use App\DTOs\V1\Product\CreateProductDto;
+use App\DTOs\V1\Product\QueryProductsDto;
+use App\DTOs\V1\Product\UpdateProductDto;
 
 // ETC
 use App\Http\Resources\ProductResource;

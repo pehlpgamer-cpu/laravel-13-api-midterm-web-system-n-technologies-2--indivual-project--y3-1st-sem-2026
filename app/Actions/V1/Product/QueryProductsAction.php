@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 namespace App\Actions\V1\Product;
-use App\DTOs\Product\QueryProductsDto;
+use App\DTOs\V1\Product\QueryProductsDto;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
 

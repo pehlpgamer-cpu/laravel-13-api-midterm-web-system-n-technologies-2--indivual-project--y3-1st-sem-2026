@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\DTOs\Product;
+namespace App\DTOs\V1\Product;
 
 final readonly class UpdateProductDto
 {
